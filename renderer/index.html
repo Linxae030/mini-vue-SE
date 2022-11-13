@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div id="app"></div>
+		<script src="./renderer.js"></script>
+		<script>
+			// 1.通过渲染器创建vnode
+			const vnode = h(
+				"div",
+				{
+					class: "gg",
+					test: "test",
+					onclick: () => {
+						console.log("old click");
+					},
+				},
+				[
+					h("h2", { class: "1" }, "啊啊啊"),
+					h("h2", { class: "2" }, "啊啊啊"),
+					h("h2", { class: "3" }, "啊啊啊"),
+					h(
+						"button",
+						{
+							class: "4",
+							onClick: function () {
+								"click buttttttton";
+							},
+						},
+						"-1"
+					),
+				]
+			);
+
+			// 2.通过mount将vnode挂载
+			const app = document.querySelector("#app");
+			mount(vnode, app);
+
+			// 3.创建新的vnode
+
+			setTimeout(() => {
+				console.log("0.5s");
+				const vnode1 = h(
+					"div",
+					{
+						class: "coderwhy",
+						id: "aaa",
+						onclick: () => {
+							console.log("new click");
+						},
+					},
+					[
+						h("h2", null, "替换咯"),
+						h("h2", null, "替换咯"),
+						// h("h2", null, "替换咯"),
+						h(
+							"button",
+							{
+								onClick: function () {
+									"click buttttttton";
+								},
+							},
+							"+1"
+						),
+					]
+				);
+				patch(vnode, vnode1);
+				console.log("patch");
+			}, 1000);
+		</script>
+	</body>
+</html>
